@@ -1,0 +1,68 @@
+
+{% extends "base.html" %}
+
+  {% block content %}
+    
+    <!-- SECTION -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <!-- Product main img -->
+                <div class="col-md-5"> <!-- Image on the left side -->
+                    <div id="product-main-img">
+                        <div class="product-preview">
+                            <img src="/media/{{detail.img}}" alt="" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+                <!-- /Product main img -->
+
+                <!-- Product details -->
+                <div class="col-md-7"> <!-- Details on the right side -->
+                    <div class="product-details">
+                        <h2 class="product-name">{{ detail.name }}</h2>
+                        <div>
+                            <div class="product-rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="product-price">₹{{ detail.price }}</h3>
+                        </div>
+                        {% comment %} <p>{{ detail.dec }}</p> {% endcomment %}
+                        <p>{{ detail.dec|linebreaks }}</p>
+
+                        <div class="add-to-cart">
+							{% if user.is_authenticated %}
+							<a href="{% url 'add_to_cart' detail.category detail.slug %}" class="add-to-cart-btn">
+								Add to cart
+							</a>
+							{% else %}
+							<a href="{% url 'login' %}" class="add-to-cart-btn">
+								Add to Cart
+							</a>
+							{% endif %}
+						</div>
+                    </div>
+                </div>
+                <!-- /Product details -->
+
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /SECTION -->
+
+
+		
+	{% endblock %}
+		
+
+		

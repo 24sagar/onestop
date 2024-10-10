@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+  {% block content %}
+  <div class="section">
+    <!-- container -->
+    <div class="container">
+      <!-- row -->
+      <div class="row">
+      
+        <!-- STORE -->
+        <div id="store" class="col-md-9">
+          <!-- store products -->
+          <div class="row">
+          {% for n in iphonedata %}
+
+            <!-- product -->
+
+            <div class="col-md-4 col-xs-6">
+              <div class="product">
+                <div class="product-img">
+                  <img src="/media/{{n.img}}" alt="">
+                  
+                </div>
+                <div class="product-body">
+                  <p class="product-category">{{n.category}}</p>
+                  <h3 class="product-name"><a href="/product_detail/{{ n.category }}/{{ n.slug }}">{{n.name}}</a></h3>
+                  <h4 class="product-price">₹{{n.price}} </h4>
+                  <div class="product-rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                  </div>
+                  <div class="product-btns">
+                    <a href="/product_detail/{{ n.category }}/{{ n.slug }}" class="quick-view">
+                      <i class="fa fa-eye"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="add-to-cart">
+                  {% if user.is_authenticated %}
+                  <a href="{% url 'add_to_cart' 'Iphone' n.slug %}" class="add-to-cart-btn">
+                    Add to cart
+                  </a>
+                  {% else %}
+                  <a href="{% url 'login' %}" class="add-to-cart-btn">
+                    Add to Cart
+                  </a>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            <!-- /product -->
+            {% endfor %}
+
+            
+          </div>
+          <!-- /store products -->
+        </div>
+        <!-- /STORE -->
+      </div>
+      <!-- /row -->
+    </div>
+    <!-- /container -->
+  </div>
+  <!-- /SECTION -->
+  
+  {% endblock %}
