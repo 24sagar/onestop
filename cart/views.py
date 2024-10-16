@@ -7,6 +7,11 @@ from iphone.models import Iphone
 from ipad.models import Ipad  
 from laptop.models import Laptop  
 from macbook.models import Macbook
+import razorpay
+from django.conf import settings
+
+# Initialize Razorpay client
+razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
 @login_required
 def add_to_cart(request, category, product_slug):
@@ -38,6 +43,8 @@ def add_to_cart(request, category, product_slug):
 
     return redirect('view_cart')  # Redirect to the cart page
 
+
+
 @login_required
 def view_cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
@@ -56,7 +63,7 @@ def view_cart(request):
             address.user = request.user
             address.save()
             messages.success(request, 'Your address has been updated!')
-            return redirect('view_cart')  # Reload the page after form submission
+            return redirect('view_cart') 
     else:
         form = UserAddressForm(instance=address)
 
@@ -80,8 +87,28 @@ def view_cart(request):
         })
 
     total_price = sum([product['total_price'] for product in cart_products])
+    if total_price < 1:
+        messages.error(request, "Your cart is empty or the total amount is too low to proceed.")
+        return redirect('/')
 
-    return render(request, 'checkout.html', {'cart_products': cart_products, 'total_price': total_price, 'form': form,'address': address,})
+    amount_in_paisa = int(total_price * 100)
+
+    # Create Razorpay Order
+    razorpay_order = razorpay_client.order.create({
+        'amount': amount_in_paisa, 'currency': 'INR', 'payment_capture': '1'
+    })
+
+    context = {
+        'cart_products': cart_products,
+        'total_price': total_price,
+        'form': form,
+        'address': address,
+        'razorpay_order_id': razorpay_order['id'],
+        'razorpay_key_id': settings.RAZORPAY_KEY_ID
+    }
+
+    return render(request, 'checkout.html',context)
+
 
 @login_required
 def clear_cart(request):

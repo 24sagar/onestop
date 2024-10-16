@@ -46,6 +46,7 @@ EXTERNAL_APPS =[
     'laptop',
     'auth_app',
     'cart',
+    'payment',
 ]
 
 INSTALLED_APPS += EXTERNAL_APPS
@@ -155,3 +156,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+RAZORPAY_KEY_ID = 'rzp_test_uhMMk1CBddTlT7'
+RAZORPAY_KEY_SECRET = 'y7ypbKCvpuLF5ENJqsdhu0TP'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),  # Ensure the directory exists
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'your_app_name': {  # Replace with your actual app name
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

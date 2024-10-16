@@ -819,7 +819,7 @@ a:focus {
           transform: translateX(-50%);
 }
 
-/* footer section*/
+/* footer section
 .footer_section {
   background-color: #0a0f43;
 }
@@ -847,7 +847,7 @@ a:focus {
   font-size: 1.5rem;
   font-weight: 700;
 }
-/* end footer section*/
+
 #breadcrumb {
   padding: 30px 0px;
   background: #FBFBFC;
@@ -891,7 +891,50 @@ a:focus {
 
 #breadcrumb .breadcrumb-tree li a:hover {
   color: #D10024;
+} 
+*/
+.footer_section {
+  background-color: #0a0f43;
 }
+
+.footer_section p {
+  margin: 0;
+  padding: 25px 0;
+  color: #ffffff;
+  text-align: center;
+  border-top: 0.8px solid #ffffff;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+footer {
+  font-size: 20px;
+}
+
+footer a {
+  text-decoration: none;
+}
+
+footer .text-uppercase {
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+footer .social-icons i {
+  font-size: 22px;
+}
+
+footer .social-icons a {
+  margin: 0 10px;
+  color: #fff;
+}
+
 
 
 /*----------------------------*\
@@ -1545,9 +1588,5 @@ textarea.input {
 .input-radio input[type="radio"]:checked~.caption, .input-checkbox input[type="checkbox"]:checked~.caption {
   max-height: 800px;
 }
-
-
-
-
 
 

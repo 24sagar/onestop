@@ -30,6 +30,7 @@ urlpatterns = [
     path('product_detail/<category>/<pslug>/',views.product_detail,name='product_detail'),
     path('',include('auth_app.urls')),
     path('',include('cart.urls')),
+    path('',include('payment.urls')),
 ]
 
 if settings.DEBUG:

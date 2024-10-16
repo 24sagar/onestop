@@ -12,7 +12,6 @@ def index(request):
     return render(request,"index.html")
 
 
-
 CATEGORY_MODEL_MAP = {
     'Ipad': Ipad,
     'Iphone':Iphone,

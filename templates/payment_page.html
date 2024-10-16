@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <!-- BREADCRUMB -->
+    <div id="breadcrumb" class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="breadcrumb-header">Payment</h3>
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /BREADCRUMB -->
+
+    <!-- SECTION -->
+    <div class="section">
+        <!-- container -->
+        <div class="container">
+            <!-- row -->
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="order-summary">
+                        <div class="order-col">
+                            <div><strong>TOTAL</strong></div>
+                            <div><strong class="order-total">₹{{ total_amount }}</strong></div>
+                        </div>
+                    </div>
+
+                    <!-- Razorpay Payment Button -->
+                    <form method="POST" id="razorpay-form" >
+                        {% csrf_token %}
+                        <button id="rzp-button" class="primary-btn order-submit" >Pay with Razorpay</button>
+                    </form>
+
+                </div>
+            </div>
+            <!-- /row -->
+        </div>
+        <!-- /container -->
+    </div>
+    <!-- /SECTION -->
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        var options = {
+            "key": "{{ razorpay_key_id }}", // Razorpay Key ID
+            "amount": "{{ total_amount|floatformat:0 }}00", // Amount in paisa
+            "currency": "INR",
+            "name": "One Stop Solution",
+            "description": "Order Payment",
+            "order_id": "{{ razorpay_order_id }}", // Razorpay Order ID
+            "handler": function (response){
+                // After successful payment
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'payment_callback' %}",
+                    data: {
+                        "razorpay_payment_id": response.razorpay_payment_id,
+                        "razorpay_order_id": response.razorpay_order_id,
+                        "razorpay_signature": response.razorpay_signature,
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function (data) {
+                        if(data.status === 'Payment successful') {
+                            alert("Payment successful!");
+                            window.location.href = "{% url 'payment_success' %}";  // Redirect to success page
+                        } else {
+                            alert("Payment failed: " + data.status);
+                        }
+                    },
+                    error: function (data) {
+                        alert("Payment failed, please try again.");
+                    }
+                });
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        document.getElementById('rzp-button').onclick = function(e){
+            rzp1.open();
+            e.preventDefault();
+        }
+    </script>
+{% endblock %}
