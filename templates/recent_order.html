@@ -1,0 +1,30 @@
+
+
+{% extends "base.html" %}
+{% block content %}
+<div class="order-summary-container">
+    <h1>Your Recent Order</h1>
+    <div class="order-details">
+        <h3>Order ID: {{ order.id }}</h3>
+        <p>Placed on: {{ order.created_at|date:"F j, Y, g:i a" }}</p>
+        <p>Status: <span class="status-label {{ order.status|lower }}">{{ order.status }}</span></p>
+        <p>Total Amount: ₹{{ order.amount }}</p>
+        
+        {% comment %} <h4>Ordered Items:</h4>
+        <ul class="order-items">
+          {% for item in order.orderitem_set.all %}
+            <li>
+                <span class="product-name">{{ item.product.name }}</span>
+                <span class="product-quantity">Quantity: {{ item.quantity }}</span>
+                <span class="product-price">Price: ₹{{ item.product.price }}</span>
+            </li>
+          {% endfor %}
+        </ul> {% endcomment %}
+
+        <div class="delivery-address">
+            <h4>Delivery Address:</h4>
+            <p>{{ order.address }}, {{ order.city }}, {{ order.country }}, {{ order.zip_code }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -22,25 +22,6 @@ razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZOR
 logger = logging.getLogger(__name__)
 
 
-@login_required
-def checkout(request):
-    cart, created = Cart.objects.get_or_create(user=request.user)
-    cart_items = cart.cartitem_set.all()
-
-    total_price = sum(item.product.price * item.quantity for item in cart_items)
-
-    # If the cart is empty, redirect back with a message
-    if not cart_items:
-        messages.error(request, 'Your cart is empty!')
-        return redirect('view_cart')
-
-    context = {
-        'cart_products': cart_items,
-        'total_price': total_price,
-    }
-
-    return render(request, 'checkout.html', context)
-
 
 
 @login_required
@@ -68,7 +49,9 @@ def place_order(request):
             messages.error(request, 'Your cart is empty!')
             return redirect('view_cart')
 
+        # Collect product names and calculate total amount
         cart_products = []
+        product_names = []  # List to hold product names
         for item in cart_items:
             if item.product_category == 'Iphone':
                 product = get_object_or_404(Iphone, slug=item.product_slug)
@@ -85,9 +68,12 @@ def place_order(request):
                 'quantity': item.quantity,
                 'total_price': product.price * item.quantity,
             })
+            product_names.append(product.name)  # Add product name to the list
 
         total_amount = sum([product['total_price'] for product in cart_products])
 
+        # Create a comma-separated string of product names
+        product_names_str = ', '.join(product_names)
         
         amount_in_paisa = int(total_amount * 100)  # Convert to paisa
 
@@ -115,6 +101,7 @@ def place_order(request):
                 country=country,
                 zip_code=zip_code,
                 phone=phone,
+                product_names=product_names_str,  # Save product names
                 amount=total_amount,
                 razorpay_order_id=razorpay_order['id'],
             )
@@ -184,3 +171,35 @@ def payment_callback(request):
 @login_required
 def payment_success(request):
     return render(request, 'payment_success.html')
+
+
+@login_required
+def recent_order(request):
+    try:
+        # Get the most recent order of the logged-in user
+        recent_order = Order.objects.filter(user=request.user).order_by('-created_at').first()
+        if not recent_order:
+            messages.info(request, 'No recent orders found.')
+            return redirect('view_cart')  # Redirect if no orders found
+    except Order.DoesNotExist:
+        messages.error(request, 'Error retrieving recent order.')
+        return redirect('view_cart')
+
+    context = {
+        'order': recent_order,
+    }
+    return render(request, 'recent_order.html', context)
+
+
+@login_required
+def order_history(request):
+    # Get all orders placed by the logged-in user
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    if not orders:
+        messages.info(request, 'You have not placed any orders yet.')
+        return redirect('view_cart')  # Redirect if no orders found
+
+    context = {
+        'orders': orders,
+    }
+    return render(request, 'order_history.html', context)

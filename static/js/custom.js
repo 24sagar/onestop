@@ -30,3 +30,7 @@ $(".owl-carousel").owlCarousel({
         }
     }
 });
+
+$(document).ready(function () {
+    $('.dropdown-toggle').dropdown();
+  });

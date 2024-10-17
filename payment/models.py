@@ -17,6 +17,10 @@ class Order(models.Model):
     country = models.CharField(max_length=100)
     zip_code = models.CharField(max_length=10)
     phone = models.CharField(max_length=15)
+    
+    # Update product_name to hold multiple product names
+    product_names = models.TextField() 
+    
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     razorpay_order_id = models.CharField(max_length=100, unique=True)
     razorpay_payment_id = models.CharField(max_length=100, blank=True, null=True)

@@ -1590,3 +1590,155 @@ textarea.input {
 }
 
 
+/* dropdown */
+/* Style the dropdown button to match your theme */
+.dropdown-toggle {
+  font-size: 16px;
+  color: #fff;
+  background-color: #D1E3FF; /* Adjust to match your navbar color */
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+  background-color: #D1E3FF; /* Slightly darker on hover */
+  color: #fff;
+}
+
+/* Dropdown menu items */
+.dropdown-menu {
+  background-color: #D1E3FF; /* Dark background */
+  border-radius: 4px;
+  padding: 10px;
+}
+
+/* Individual dropdown items */
+.dropdown-item {
+  color: #fff;
+  font-size: 14px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item i {
+  margin-right: 8px; /* Space between icon and text */
+}
+
+/* Hover effect for dropdown items */
+.dropdown-item:hover {
+  background-color: #D1E3FF; /* Highlight on hover */
+  color: #fff;
+  text-decoration: none;
+}
+
+
+/* Additional styles for specific items */
+.order-history {
+  background-color: #28a745; /* Custom background for Order History */
+}
+
+.order-history:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.logout {
+  background-color: #dc3545; /* Custom background for Logout */
+}
+
+.logout:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+/* Order history page */
+
+/* Container styling for both recent order and order history */
+.order-summary-container, .order-history-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Shared heading style */
+.order-summary-container h1, .order-history-container h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* Shared order details styling */
+.order-details, .order-summary {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.order-summary h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.order-summary p {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+/* Status label with color coding for statuses */
+.status-label {
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.status-label.paid {
+  background-color: #28a745;
+}
+
+.status-label.pending {
+  background-color: #ffc107;
+}
+
+.status-label.failed {
+  background-color: #dc3545;
+}
+
+/* Styling for order details link */
+.order-details-link {
+  display: inline-block;
+  padding: 8px 12px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.order-details-link:hover {
+  background-color: #0056b3;
+}
+
+/* HR separator style */
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .order-summary-container, .order-history-container {
+      max-width: 90%;
+      padding: 15px;
+  }
+}
