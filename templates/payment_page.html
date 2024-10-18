@@ -4,6 +4,154 @@
 
     <!-- BREADCRUMB -->
     <div id="breadcrumb" class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3 class="breadcrumb-header">Secure Payment</h3>
+                    <p class="lead text-muted">Complete your payment securely using Razorpay.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /BREADCRUMB -->
+
+    <!-- PAYMENT SECTION -->
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow p-4 rounded-lg">
+                    <!-- Order Summary -->
+                    <h4 class="text-center mb-4">Order Summary</h4>
+                    <div class="order-summary mb-4">
+                        <div class="order-col d-flex justify-content-between align-items-center p-2">
+                            <span class="font-weight-bold">Total Amount:</span>
+                            <span class="order-total font-weight-bold text-success">₹{{ total_amount }}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <p class="text-center text-muted mb-4">Click the button below to proceed with payment</p>
+    
+                    <!-- Payment Button -->
+                    <form method="POST" id="razorpay-form" class="text-center">
+                        {% csrf_token %}
+                        <button id="rzp-button" class="btn btn-primary btn-lg btn-block">Pay ₹{{ total_amount }} with Razorpay</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /PAYMENT SECTION -->
+
+    <!-- Razorpay Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        var options = {
+            "key": "{{ razorpay_key_id }}", // Razorpay Key ID
+            "amount": "{{ total_amount|floatformat:0 }}00", // Amount in paisa
+            "currency": "INR",
+            "name": "One Stop Solution",
+            "description": "Order Payment",
+            "order_id": "{{ razorpay_order_id }}", // Razorpay Order ID
+            "handler": function (response){
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'payment_callback' %}",
+                    data: {
+                        "razorpay_payment_id": response.razorpay_payment_id,
+                        "razorpay_order_id": response.razorpay_order_id,
+                        "razorpay_signature": response.razorpay_signature,
+                        "csrfmiddlewaretoken": "{{ csrf_token }}"
+                    },
+                    success: function (data) {
+                        if(data.status === 'Payment successful') {
+                            alert("Payment successful!");
+                            window.location.href = "{% url 'payment_success' %}";
+                        } else {
+                            alert("Payment failed: " + data.status);
+                        }
+                    },
+                    error: function () {
+                        alert("Payment failed, please try again.");
+                    }
+                });
+            },
+            "theme": {
+                "color": "#007bff"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        document.getElementById('rzp-button').onclick = function(e){
+            rzp1.open();
+            e.preventDefault();
+        }
+    </script>
+
+    <!-- Custom CSS for Payment Section -->
+    <style>
+        /* Style for the card */
+        /* Card styles */
+        .card {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            font-size: 18px;
+            padding: 12px 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background-color: #f8f9fa;
+            border: 1px solid #e3e3e3;
+            border-radius: 4px;
+        }
+
+        /* Ensure the payment content is spaced properly */
+        #payment-content {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+    
+        
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .card {
+                width: 100%;
+            }
+
+            .btn-lg {
+                font-size: 16px;
+            }
+        }
+
+    </style>
+
+{% endblock %}
+
+
+
+{% comment %} {% extends "base.html" %}
+
+{% block content %}
+
+    <!-- BREADCRUMB -->
+    <div id="breadcrumb" class="section">
         <!-- container -->
         <div class="container">
             <!-- row -->
@@ -91,4 +239,4 @@
             e.preventDefault();
         }
     </script>
-{% endblock %}
+{% endblock %} {% endcomment %}
