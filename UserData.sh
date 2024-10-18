@@ -9,7 +9,7 @@ set -e
 GIT_REPO_URL="https://24sagar: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@github.com/24sagar/onestop.git"
 
 # Replace {YOUR_PROJECT_MAIN_DIR_NAME} with your actual project directory name
-PROJECT_MAIN_DIR_NAME="onestop"
+PROJECT_MAIN_DIR_NAME="OneStopSolutions"
 
 # Clone repository
 git clone "$GIT_REPO_URL" "/home/ubuntu/$PROJECT_MAIN_DIR_NAME"

@@ -6,8 +6,8 @@ After=network.target
 [Service]
 User=ubuntu
 Group=www-data
-WorkingDirectory=/home/ubuntu/project
-ExecStart=/home/ubuntu/project/venv/bin/gunicorn \
+WorkingDirectory=/home/ubuntu/OneStopSolutions
+ExecStart=/home/ubuntu/OneStopSolutions/venv/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
           --bind unix:/run/gunicorn.sock \
