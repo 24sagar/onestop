@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -169,4 +170,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 RAZORPAY_KEY_ID = 'rzp_test_uhMMk1CBddTlT7'
 RAZORPAY_KEY_SECRET = 'y7ypbKCvpuLF5ENJqsdhu0TP'
+
+
 
