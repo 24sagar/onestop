@@ -1,4 +1,5 @@
-{% extends "base.html" %}
+
+  {% extends "base.html" %}
 
   {% block content %}
   <div class="section">
@@ -8,18 +9,16 @@
       <div class="row">
       
         <!-- STORE -->
-        <div id="store" class="col-md-9">
+        <div id="store" class="col-md-12">  <!-- Changed from col-md-9 to col-md-12 -->
           <!-- store products -->
           <div class="row">
           {% for n in iphonedata %}
-
+  
             <!-- product -->
-
-            <div class="col-md-4 col-xs-6">
+            <div class="col-md-3 col-xs-6">  <!-- Keeping col-md-3 to fit 4 products in a row -->
               <div class="product">
                 <div class="product-img">
                   <img src="/media/{{n.img}}" alt="">
-                  
                 </div>
                 <div class="product-body">
                   <p class="product-category">{{n.category}}</p>
@@ -52,9 +51,8 @@
               </div>
             </div>
             <!-- /product -->
-            {% endfor %}
-
-            
+          {% endfor %}
+  
           </div>
           <!-- /store products -->
         </div>
@@ -67,3 +65,5 @@
   <!-- /SECTION -->
   
   {% endblock %}
+
+  

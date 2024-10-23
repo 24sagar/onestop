@@ -25,7 +25,16 @@ SECRET_KEY = 'django-insecure-8_08mdf$8e&ioo0s)#)_0&pkx73=$8tkafum=@#9o+)!ejxrcb
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['onestopsolutions.one', 'www.onestopsolutions.one', '54.204.229.0']
+# ALLOWED_HOSTS = ['*']
+
+
+CSRF_TRUSTED_ORIGINS = ['https://onestopsolutions.one', 'https://www.onestopsolutions.one']
+
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 
 
 # Application definition
