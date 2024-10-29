@@ -821,13 +821,13 @@ a:focus {
 }
 
 .footer_section {
-  background-color: #D0E2FF;
+  background-color: #000000;
 }
 
 .footer_section p {
   margin: 0;
   padding: 25px 0;
-  color: #000000;
+  color: #ffffff;
   text-align: center;
   border-top: 0.8px solid #ffffff;
 }
